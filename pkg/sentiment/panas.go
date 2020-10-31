@@ -4,7 +4,7 @@
 package sentiment
 
 import (
-	"github.com/amarjeet000/panas-go/internal/text"
+	"github.com/coderafting/panas-go/internal/text"
 )
 
 /*

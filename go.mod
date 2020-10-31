@@ -1,3 +1,3 @@
-module github.com/amarjeet000/panas-go
+module github.com/coderafting/panas-go
 
 go 1.14
