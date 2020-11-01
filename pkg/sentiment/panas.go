@@ -4,6 +4,7 @@
 package sentiment
 
 import (
+	"fmt"
 	"github.com/coderafting/panas-go/internal/text"
 )
 
@@ -86,6 +87,9 @@ func Categories(textString string) []string {
 }
 
 // CategoryAggregate returns the aggregate sentiment value of a category. It ranges from 0 to 1.
-func CategoryAggregate(categoryTextsCount int, totalTextsCount int) float64 {
-	return float64(categoryTextsCount) / float64(totalTextsCount)
+func CategoryAggregate(categoryTextsCount int, totalTextsCount int) (float64, error) {
+	if totalTextsCount == 0 {
+		return 0, fmt.Errorf("totalTextsCount is 0")
+	}
+	return float64(categoryTextsCount) / float64(totalTextsCount), nil
 }

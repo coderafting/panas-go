@@ -148,7 +148,7 @@ func TestCategoryAggregate(t *testing.T) {
 		{categoryTextsCount: 2, totalTextsCount: 10, expected: 0.2}}
 
 	for _, c := range cases {
-		out := CategoryAggregate(c.categoryTextsCount, c.totalTextsCount)
+		out, _ := CategoryAggregate(c.categoryTextsCount, c.totalTextsCount)
 		if out != c.expected {
 			t.Errorf("Failed: expected %v, recieved %v", c.expected, out)
 		}

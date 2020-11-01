@@ -35,6 +35,21 @@ var StatesColl = []string{
 	"amazed", "surprised", "astonished",
 }
 
+// CategoriesMap is map of available sentiment categories, as recognized by the pANAS-t paper
+var CategoriesMap = map[string]bool{
+	"jovility":      true,
+	"selfAssurance": true,
+	"attentiveness": true,
+	"fear":          true,
+	"hostility":     true,
+	"guilt":         true,
+	"sadness":       true,
+	"shyness":       true,
+	"fatigue":       true,
+	"serenity":      true,
+	"surprise":      true,
+}
+
 type state struct {
 	category  string
 	direction string
