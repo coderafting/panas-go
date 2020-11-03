@@ -78,7 +78,7 @@ func Categories(textString string) []string {
 		if states != nil {
 			for _, s := range states {
 				// NOTE: the states contains 1 or 2 items, therefore, this nested for-loop is perfectly alright.
-				stateCatg := StatesCategories[s].category
+				stateCatg := StatesCategories[s].Category
 				catgs = append(catgs, stateCatg)
 			}
 		}
