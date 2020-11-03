@@ -7,3 +7,6 @@ The **panas-go** library exposes utility data and functions to help with the com
 The library exposes `sentiment` package for **data** and **computation functions** that are described in the PANAS-t paper.
 
 It is expected that you study the paper before using this library. Once you have gone through the paper, using the library will be straight-forward.
+
+### Sample usage
+A sample usage can be found in the **[sentiment-analysis](https://github.com/coderafting/sentiment-analysis)** service that I have open sourced.
