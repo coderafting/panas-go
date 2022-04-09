@@ -27,7 +27,7 @@ func TestInIndex(t *testing.T) {
 		words    []string
 		expected bool
 	}
-	index := map[string][]string{"I500": []string{"I'm", "I am"}, "A500": []string{"am"}}
+	index := map[string][]string{"I500": {"I'm", "I am"}, "A500": {"am"}}
 	cases := []testCase{
 		{indexMap: index, words: []string{"I am", "good"}, expected: true},
 		{indexMap: index, words: []string{"this", "is", "covid", "time"}, expected: false}}

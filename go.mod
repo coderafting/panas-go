@@ -1,3 +1,3 @@
 module github.com/coderafting/panas-go
 
-go 1.14
+go 1.18
