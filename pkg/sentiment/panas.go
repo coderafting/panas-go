@@ -5,6 +5,7 @@ package sentiment
 
 import (
 	"fmt"
+
 	"github.com/coderafting/panas-go/internal/text"
 )
 
@@ -67,11 +68,34 @@ func ValidTextWithTopic(textString, topic string) bool {
 	return false
 }
 
+// States detrmines the sentiment states of a text.
+func States(textString string) []string {
+	states := map[string]bool{}
+	res := []string{}
+	words := text.GenerateValidWords(textString)
+	for _, w := range words {
+		sts := StatesSoundexIndex[text.Soundex(w)]
+		if len(sts) == 1 {
+			states[sts[0]] = true
+
+		} else if len(sts) > 1 {
+			for _, s := range sts {
+				states[s] = true
+			}
+		}
+	}
+	for k, _ := range states {
+		res = append(res, k)
+	}
+	return res
+}
+
 // Categories detrmines the sentiment categories of a text.
 func Categories(textString string) []string {
 	// Currently, the conflict resolution is ignored when a tweet contains more than one sentiment.
 	// For now, we will simply consider such tweets a part of all identified sentiment categories.
-	catgs := []string{}
+	catgs := map[string]bool{}
+	res := []string{}
 	words := text.GenerateValidWords(textString)
 	for _, w := range words {
 		states := StatesSoundexIndex[text.Soundex(w)]
@@ -79,11 +103,14 @@ func Categories(textString string) []string {
 			for _, s := range states {
 				// NOTE: the states contains 1 or 2 items, therefore, this nested for-loop is perfectly alright.
 				stateCatg := StatesCategories[s].Category
-				catgs = append(catgs, stateCatg)
+				catgs[stateCatg] = true
 			}
 		}
 	}
-	return catgs
+	for k, _ := range catgs {
+		res = append(res, k)
+	}
+	return res
 }
 
 // CategoryAggregate returns the aggregate sentiment value of a category. It ranges from 0 to 1.
