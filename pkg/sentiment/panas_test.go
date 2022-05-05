@@ -114,14 +114,43 @@ func TestValidTextWithTopic(t *testing.T) {
 	}
 }
 
+func TestStates(t *testing.T) {
+	type testCase struct {
+		textString string
+		expected   []string
+	}
+	cases := []testCase{
+		{textString: "I am xyz", expected: []string{}},
+		{textString: "I am happy", expected: []string{"happy"}},
+		{textString: "I am both happy and sad", expected: []string{"happy", "sad"}}}
+
+	for _, c := range cases {
+		out := States(c.textString)
+		if len(out) == 1 {
+			if out[0] != c.expected[0] {
+				t.Errorf("Failed: expected %v, recieved %v", c.expected, out)
+			}
+		} else if len(out) > 1 {
+			if out[0] != c.expected[0] || out[1] != c.expected[1] {
+				t.Errorf("Failed: expected %v, recieved %v", c.expected, out)
+			}
+		} else if len(out) == 0 {
+			if len(c.expected) != 0 {
+				t.Errorf("Failed: expected %v, recieved %v", c.expected, out)
+			}
+		}
+	}
+}
+
 func TestCategories(t *testing.T) {
 	type testCase struct {
 		textString string
 		expected   []string
 	}
 	cases := []testCase{
+		{textString: "I am xyz", expected: []string{}},
 		{textString: "I am happy", expected: []string{"jovility"}},
-		{textString: "I am both happy and sad", expected: []string{"jovility", "sadness"}}}
+		{textString: "I am happy, joyful, and sad", expected: []string{"jovility", "sadness"}}}
 
 	for _, c := range cases {
 		out := Categories(c.textString)
@@ -129,8 +158,12 @@ func TestCategories(t *testing.T) {
 			if out[0] != c.expected[0] {
 				t.Errorf("Failed: expected %v, recieved %v", c.expected, out)
 			}
-		} else {
-			if out[0] != c.expected[0] && out[1] != c.expected[1] {
+		} else if len(out) > 1 {
+			if out[0] != c.expected[0] || out[1] != c.expected[1] {
+				t.Errorf("Failed: expected %v, recieved %v", c.expected, out)
+			}
+		} else if len(out) == 0 {
+			if len(c.expected) != 0 {
 				t.Errorf("Failed: expected %v, recieved %v", c.expected, out)
 			}
 		}
