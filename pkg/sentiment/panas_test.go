@@ -116,13 +116,14 @@ func TestValidTextWithTopic(t *testing.T) {
 
 func TestStates(t *testing.T) {
 	type testCase struct {
-		textString string
-		expected   []string
+		textString  string
+		expected    []string
+		expectedMap map[string]bool
 	}
 	cases := []testCase{
 		{textString: "I am xyz", expected: []string{}},
 		{textString: "I am happy", expected: []string{"happy"}},
-		{textString: "I am both happy and sad", expected: []string{"happy", "sad"}}}
+		{textString: "I am both happy and sad", expectedMap: map[string]bool{"happy": true, "sad": true}}}
 
 	for _, c := range cases {
 		out := States(c.textString)
@@ -131,8 +132,13 @@ func TestStates(t *testing.T) {
 				t.Errorf("Failed: expected %v, recieved %v", c.expected, out)
 			}
 		} else if len(out) > 1 {
-			if out[0] != c.expected[0] || out[1] != c.expected[1] {
-				t.Errorf("Failed: expected %v, recieved %v", c.expected, out)
+			for _, v := range out {
+				if c.expectedMap[v] != true {
+					t.Errorf("Failed: expected %v in %v", v, c.expectedMap)
+				}
+				if len(c.expectedMap) != len(out) {
+					t.Errorf("Failed: expected elements of %v, recieved elements of %v", c.expectedMap, v)
+				}
 			}
 		} else if len(out) == 0 {
 			if len(c.expected) != 0 {
@@ -144,13 +150,14 @@ func TestStates(t *testing.T) {
 
 func TestCategories(t *testing.T) {
 	type testCase struct {
-		textString string
-		expected   []string
+		textString  string
+		expected    []string
+		expectedMap map[string]bool
 	}
 	cases := []testCase{
 		{textString: "I am xyz", expected: []string{}},
 		{textString: "I am happy", expected: []string{"jovility"}},
-		{textString: "I am happy, joyful, and sad", expected: []string{"jovility", "sadness"}}}
+		{textString: "I am happy, joyful, and sad", expectedMap: map[string]bool{"jovility": true, "sadness": true}}}
 
 	for _, c := range cases {
 		out := Categories(c.textString)
@@ -159,8 +166,13 @@ func TestCategories(t *testing.T) {
 				t.Errorf("Failed: expected %v, recieved %v", c.expected, out)
 			}
 		} else if len(out) > 1 {
-			if out[0] != c.expected[0] || out[1] != c.expected[1] {
-				t.Errorf("Failed: expected %v, recieved %v", c.expected, out)
+			for _, v := range out {
+				if c.expectedMap[v] != true {
+					t.Errorf("Failed: expected %v in %v", v, c.expectedMap)
+				}
+				if len(c.expectedMap) != len(out) {
+					t.Errorf("Failed: expected elements of %v, recieved elements of %v", c.expectedMap, v)
+				}
 			}
 		} else if len(out) == 0 {
 			if len(c.expected) != 0 {
